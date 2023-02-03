@@ -32,7 +32,7 @@ if(!isset($_SERVER['PHP_AUTH_USER']) || (isset($_SERVER['PHP_AUTH_USER']) &&
     }else if($_SERVER['REQUEST_METHOD'] === 'PUT'){
         $controle->put($table, $id, $contenu);
     }else if($_SERVER['REQUEST_METHOD'] === 'DELETE'){
-        $controle->delete($table, $id);
+        $controle->delete($table, $contenu);
     }
 
 }
