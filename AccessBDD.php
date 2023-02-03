@@ -6,10 +6,10 @@ include_once("ConnexionPDO.php");
  */
 class AccessBDD {
 	
-    public $login="root";
-    public $mdp="";
-    public $bd="mediatek86";
-    public $serveur="localhost";
+    public $login="u555127890_samedia";
+    public $mdp="Azerty85!";
+    public $bd="u555127890_documents";
+    public $serveur="127.0.0.1";
     public $port="3306";	
     public $conn = null;
 
@@ -60,6 +60,10 @@ class AccessBDD {
             switch($table){
                 case "exemplaire" :
                     return $this->selectAllExemplairesRevue($id);
+                case "dvd" :
+                    return $this->selectAllDvd($id);
+                case "revue" :
+                    return $this->selectAllRevues($id);
                 default:
                     // cas d'un select portant sur une table simple			
                     $param = array(
@@ -95,7 +99,8 @@ class AccessBDD {
         $req .= "join rayon r on r.id=d.idRayon ";
         $req .= "order by titre ";		
         return $this->conn->queryAll($req);
-    }	
+    }
+    
 
     /**
      * récupération de toutes les lignes de la table DVD et les tables associées
@@ -141,14 +146,15 @@ class AccessBDD {
         $req .= "where e.id = :id ";
         $req .= "order by e.dateAchat DESC";		
         return $this->conn->queryAll($req, $param);
-    }		
+    }
+    
 
     /**
      * suppresion d'une ou plusieurs lignes dans une table
      * @param string $table nom de la table
      * @param array $champs nom et valeur de chaque champs
      * @return true si la suppression a fonctionné
-     */	
+     */ 
     public function delete($table, $champs){
         if($this->conn != null){
             // construction de la requête
@@ -158,7 +164,7 @@ class AccessBDD {
             }
             // (enlève le dernier and)
             $requete = substr($requete, 0, strlen($requete)-5);   
-            return $this->conn->execute($requete, $champs);		
+            return $this->conn->execute($requete, $champs);     
         }else{
             return null;
         }

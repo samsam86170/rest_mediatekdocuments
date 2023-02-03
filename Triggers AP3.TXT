@@ -1,0 +1,85 @@
+DECLENCHEURS UTILISES DANS LA BDD MEDIATEK86 POUR L'ATELIER PROFESSIONNEL 3 : 
+
+
+Trigger sur la table REVUE - Ajoute l'id de la revue ajoutée dans la table REVUE, à la table DOCUMENT :
+
+DELIMITER $$
+CREATE TRIGGER `tr_revue_ibfk_1` BEFORE INSERT ON `revue`
+ FOR EACH ROW BEGIN
+  DECLARE cnt INT;
+  SELECT COUNT(*) INTO cnt
+  FROM document
+  WHERE id = NEW.id;
+
+  IF cnt = 0 THEN
+    INSERT INTO document (id) VALUES (NEW.id);
+  END IF;
+END$$
+DELIMITER ;
+
+
+
+Triggers sur la table LIVRES_DVD - Ajoute l'id du dvd ajouté dans la table LIVRES_DVD, à la table DOCUMENT :
+
+DELIMITER $$
+CREATE TRIGGER `tr_livres_dvd_ibfk_1` BEFORE INSERT ON `livres_dvd`
+ FOR EACH ROW BEGIN
+  DECLARE cnt INT;
+  SELECT COUNT(*) INTO cnt
+  FROM document
+  WHERE id = NEW.id;
+
+  IF cnt = 0 THEN
+    INSERT INTO document (id) VALUES (NEW.id);
+  END IF;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `add_document_id_to_documents` BEFORE INSERT ON `livres_dvd`
+ FOR EACH ROW BEGIN
+  IF NOT EXISTS (SELECT id FROM document WHERE id = NEW.id) THEN
+    INSERT INTO document (id) VALUES (NEW.id);
+  END IF;
+END$$
+DELIMITER ;
+
+
+Trigger sur la table LIVRE - Ajoute l'id du livre ajouté dans la table LIVRE, à la table DOCUMENT :
+
+DELIMITER $$
+CREATE TRIGGER `tr_livre_ibfk_1` BEFORE INSERT ON `livre`
+ FOR EACH ROW BEGIN
+  DECLARE cnt INT;
+  SELECT COUNT(*) INTO cnt
+  FROM livres_dvd
+  WHERE id = NEW.id;
+
+  IF cnt = 0 THEN
+    INSERT INTO livres_dvd (id) VALUES (NEW.id);
+  END IF;
+END$$
+DELIMITER ;
+
+
+Trigger sur la table DVD - Ajoute l'id du dvd ajouté dans la table DVD, à la table LIVRES_DVD :
+
+DELIMITER $$
+CREATE TRIGGER `add_dvd_id_to_livres_dvd` BEFORE INSERT ON `dvd`
+ FOR EACH ROW BEGIN
+  IF NOT EXISTS (SELECT id FROM livres_dvd WHERE id = NEW.id) THEN
+    INSERT INTO livres_dvd (id) VALUES (NEW.id);
+  END IF;
+END$$
+DELIMITER ;
+
+
+Trigger sur la table DOCUMENT - Supprime l'id du document supprimé dans la table DOCUMENT, de la table LIVRES_DVD :
+
+DELIMITER $$
+CREATE TRIGGER `tr_delete_document` BEFORE DELETE ON `document`
+ FOR EACH ROW BEGIN
+  DELETE FROM livres_dvd WHERE id = OLD.id;
+END$$
+DELIMITER ;
+
