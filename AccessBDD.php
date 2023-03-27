@@ -42,6 +42,8 @@ class AccessBDD {
                     return $this->selectAllExemplairesRevue();
                 case "commandedocument" :
                     return $this->selectAllCommandesDocument();
+                case "abonnementsecheance" :
+                    return $this->selectAllAbonnementsEcheance();
                 default:
                     // cas d'un select portant sur une table simple, avec tri sur le libellé
                     return $this->selectAllTableSimple($table);
@@ -68,6 +70,8 @@ class AccessBDD {
                     return $this->selectAllRevues($id);
                 case "commandedocument" :
                     return $this->selectAllCommandesDocument($id);
+                case "abonnement" :
+                    return $this->selectAllAbonnementsRevues($id);
                 default:
                     // cas d'un select portant sur une table simple			
                     $param = array(
@@ -160,7 +164,7 @@ class AccessBDD {
         $param = array (
             "id" => $id
                 );
-        $req = "Select l.nbExemplaire, l.idLivreDvd, l.idSuivi, s.libelle, l.id, max(c.dateCommande) as dateCommande, sum(c.montant) as montant ";
+        $req = "select l.nbExemplaire, l.idLivreDvd, l.idSuivi, s.libelle, l.id, max(c.dateCommande) as dateCommande, sum(c.montant) as montant ";
         $req .= "from commandedocument l join suivi s on s.id=l.idSuivi ";
         $req .= "left join commande c on l.id=c.id ";
         $req .= "where l.idLivreDvd = :id ";
@@ -168,6 +172,36 @@ class AccessBDD {
         $req .= "order by dateCommande DESC";
         return $this->conn->query($req, $param);
     }
+    
+     /**
+     * récupération de tout les abonnements d'une revue
+     * @param string $id id de l'abonnement de la revue concernée
+     * @return lignes de la requete
+     */
+    public function selectAllAbonnementsRevues($id){
+        $param = array(
+                "id" => $id
+        );
+        $req = "select c.id, c.dateCommande, c.montant, a.dateFinAbonnement, a.idRevue  ";
+        $req .= "from commande c join abonnement a ON c.id=a.id ";
+        $req .= "where a.idRevue= :id  ";
+        $req .= "order by c.dateCommande DESC  ";
+        return $this->conn->queryAll($req, $param);
+    }
+
+    /**
+     * récupération de tout les abonnements arrivant à échéance dans 30 jours
+     * @return lignes de la requête
+     */
+    public function selectAllAbonnementsEcheance(){
+        $req ="select a.dateFinAbonnement, a.idRevue, d.titre ";
+        $req .="from abonnement a ";
+        $req .="join revue r on a.idRevue = r.id ";
+        $req .="join document d on r.id = d.id ";
+        $req .="where datediff(current_date(), a.dateFinAbonnement) < 30 ";
+        $req .="order by a.dateFinAbonnement ASC; ";
+        return $this->conn->queryAll($req);
+    }   
 
     /**
      * suppresion d'une ou plusieurs lignes dans une table
