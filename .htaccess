@@ -1,4 +1,8 @@
 RewriteEngine on
+
+# Redirige vers une page d'erreur si la route est vide
+RewriteRule ^$ mediatekdocuments.php?error=404 
+
 RewriteRule ^([a-zA-Z]+)$ mediatekdocuments.php?table=$1
 RewriteRule ^([a-zA-Z]+)/([a-zA-Z0-9]+)$ mediatekdocuments.php?table=$1&id=$2
 RewriteRule ^([a-zA-Z]+)/({.*})$ mediatekdocuments.php?table=$1&contenu=$2
