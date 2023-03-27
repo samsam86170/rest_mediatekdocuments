@@ -6,11 +6,11 @@ include_once("ConnexionPDO.php");
  */
 class AccessBDD {
 	
-    public $login="root";
-    public $mdp="Azerty85!";
-    public $bd="mediatek86";
-    public $serveur="localhost";
-    public $port="3308";	
+    public $login="u555127890_userdocs";
+    public $mdp="Azerty85";
+    public $bd="u555127890_docsmediatek86";
+    public $serveur="127.0.0.1";
+    public $port="3306";	
     public $conn = null;
 
     /**

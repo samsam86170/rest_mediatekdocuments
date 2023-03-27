@@ -1,13 +1,17 @@
 {
 	"info": {
-		"_postman_id": "7def1898-f297-4fc6-9644-96199c8db662",
-		"name": "MediatekDocumentsTests",
+		"_postman_id": "2ed0500a-6751-433b-900f-c94d3acfcec5",
+		"name": "MediatekDocumentsTestsServer",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22263308"
 	},
 	"item": [
 		{
-			"name": "Récupération de la liste de livres",
+			"name": "Récupération des livres -  Api en ligne",
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": true,
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -25,15 +29,25 @@
 					]
 				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
 				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/livre",
-					"protocol": "http",
+					"raw": "https://mediatek-documents-dhaussy.com/livre",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"mediatek-documents-dhaussy",
+						"com"
 					],
 					"path": [
-						"rest_mediatekdocuments",
 						"livre"
 					]
 				}
@@ -41,7 +55,11 @@
 			"response": []
 		},
 		{
-			"name": "Récupération d'un livre selon son id",
+			"name": "Récupération d'un livre selon son id - Api en ligne",
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": true,
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -59,15 +77,25 @@
 					]
 				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
 				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/livre/00001",
-					"protocol": "http",
+					"raw": "https://mediatek-documents-dhaussy.com/livre/00001",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"mediatek-documents-dhaussy",
+						"com"
 					],
 					"path": [
-						"rest_mediatekdocuments",
 						"livre",
 						"00001"
 					]
@@ -76,382 +104,7 @@
 			"response": []
 		},
 		{
-			"name": "Récupération de la liste des dvds",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "adminpwd",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "id",
-						"value": "00027",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/dvd",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"rest_mediatekdocuments",
-						"dvd"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Récupération de la liste des revues",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "adminpwd",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "id",
-						"value": "00027",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/revue",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"rest_mediatekdocuments",
-						"revue"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Récupération des commandes d'un document ",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "adminpwd",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "id",
-						"value": "00027",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/commandedocument/00001",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"rest_mediatekdocuments",
-						"commandedocument",
-						"00001"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Récupération des exemplaires d'une revue",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "adminpwd",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "id",
-						"value": "00027",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/exemplaire/10001",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"rest_mediatekdocuments",
-						"exemplaire",
-						"10001"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Récupération des exemplaires d'un document",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "adminpwd",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "id",
-						"value": "00027",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/exemplairesdocument/00001",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"rest_mediatekdocuments",
-						"exemplairesdocument",
-						"00001"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Récupération des abonnements d'une revue",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "adminpwd",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "id",
-						"value": "00027",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/abonnement/10001",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"rest_mediatekdocuments",
-						"abonnement",
-						"10001"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Récupération des abonnements arrivants à échéance",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "adminpwd",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "id",
-						"value": "00027",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/abonnementsecheance",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"rest_mediatekdocuments",
-						"abonnementsecheance"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Récupération d'un document",
+			"name": "Récupération d'un document selon son id - Api en ligne",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -471,13 +124,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/document/20001",
-					"protocol": "http",
+					"raw": "https://mediatek-documents-dhaussy.com/document/20001",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"mediatek-documents-dhaussy",
+						"com"
 					],
 					"path": [
-						"rest_mediatekdocuments",
 						"document",
 						"20001"
 					]
@@ -486,7 +139,10 @@
 			"response": []
 		},
 		{
-			"name": "Récupération de la liste des revues",
+			"name": "Récupération des revues - Api en ligne",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -505,15 +161,355 @@
 				},
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00029\",\r\n    \"isbn\": \"TEST\",\r\n    \"auteur\": \"sam\",\r\n    \"collection\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost/rest_mediatekdocuments/revue",
-					"protocol": "http",
+					"raw": "https://mediatek-documents-dhaussy.com/revue",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"mediatek-documents-dhaussy",
+						"com"
 					],
 					"path": [
-						"rest_mediatekdocuments",
 						"revue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des exemplaires d'une revue - Api en ligne",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00029\",\r\n    \"isbn\": \"TEST\",\r\n    \"auteur\": \"sam\",\r\n    \"collection\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mediatek-documents-dhaussy.com/exemplaire/10001",
+					"protocol": "https",
+					"host": [
+						"mediatek-documents-dhaussy",
+						"com"
+					],
+					"path": [
+						"exemplaire",
+						"10001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des exemplaires d'un document - Api en ligne",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00029\",\r\n    \"isbn\": \"TEST\",\r\n    \"auteur\": \"sam\",\r\n    \"collection\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mediatek-documents-dhaussy.com/exemplairesdocument/00002",
+					"protocol": "https",
+					"host": [
+						"mediatek-documents-dhaussy",
+						"com"
+					],
+					"path": [
+						"exemplairesdocument",
+						"00002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération d'une commande - Api en ligne",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00029\",\r\n    \"isbn\": \"TEST\",\r\n    \"auteur\": \"sam\",\r\n    \"collection\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mediatek-documents-dhaussy.com/commande/00001",
+					"protocol": "https",
+					"host": [
+						"mediatek-documents-dhaussy",
+						"com"
+					],
+					"path": [
+						"commande",
+						"00001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des commandes d'un document - Api en ligne",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00029\",\r\n    \"isbn\": \"TEST\",\r\n    \"auteur\": \"sam\",\r\n    \"collection\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mediatek-documents-dhaussy.com/commandedocument/20001",
+					"protocol": "https",
+					"host": [
+						"mediatek-documents-dhaussy",
+						"com"
+					],
+					"path": [
+						"commandedocument",
+						"20001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération de la liste des dvd - Api en ligne",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00029\",\r\n    \"isbn\": \"TEST\",\r\n    \"auteur\": \"sam\",\r\n    \"collection\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mediatek-documents-dhaussy.com/dvd",
+					"protocol": "https",
+					"host": [
+						"mediatek-documents-dhaussy",
+						"com"
+					],
+					"path": [
+						"dvd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des abonnements d'une revue - Api en ligne",
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://mediatek-documents-dhaussy.com/abonnement/10001",
+					"protocol": "https",
+					"host": [
+						"mediatek-documents-dhaussy",
+						"com"
+					],
+					"path": [
+						"abonnement",
+						"10001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des abonnements arrivant à échéance - Api en ligne",
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://mediatek-documents-dhaussy.com/abonnementsecheance",
+					"protocol": "https",
+					"host": [
+						"mediatek-documents-dhaussy",
+						"com"
+					],
+					"path": [
+						"abonnementsecheance"
 					]
 				}
 			},
