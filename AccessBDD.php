@@ -72,6 +72,8 @@ class AccessBDD {
                     return $this->selectAllCommandesDocument($id);
                 case "abonnement" :
                     return $this->selectAllAbonnementsRevues($id);
+                case "exemplairesdocument":
+                    return $this->selectAllExemplairesDocument($id);
                 default:
                     // cas d'un select portant sur une table simple			
                     $param = array(
@@ -202,6 +204,22 @@ class AccessBDD {
         $req .="order by a.dateFinAbonnement ASC; ";
         return $this->conn->queryAll($req);
     }   
+    
+    /**
+    * Récupération de tous les exemplaires d'un document
+    * @param string $id id du document concerné
+    * @return lignes de la requête
+    */
+    public function selectAllExemplairesDocument($id){
+    $param = array(
+                "id" => $id
+        );
+        $req = "select ex.id, ex.numero, ex.dateAchat, ex.photo, ex.idEtat, et.libelle ";
+        $req .= "from exemplaire ex JOIN etat et ON ex.idEtat = et.id ";
+        $req .= "where ex.id = :id ";
+        $req .= "order by ex.dateAchat DESC";       
+        return $this->conn->query($req, $param);
+    }  
 
     /**
      * suppresion d'une ou plusieurs lignes dans une table
@@ -253,25 +271,48 @@ class AccessBDD {
     }
 
     /**
-     * modification d'une ligne dans une table
-     * @param string $table nom de la table
-     * @param string $id id de la ligne à modifier
-     * @param array $param nom et valeur de chaque champs de la ligne
-     * @return true si la modification a fonctionné
-     */	
+    * Modifie une ligne dans une table
+    * prise en compte du numéro d'exemplaire spécifique
+    * @param string $table nom de la table
+    * @param string $id id de la ligne à modifier
+    * @param array $champs nom et valeur de chaque champ de la ligne
+    * @return true si la modification a fonctionné
+    */ 
     public function updateOne($table, $id, $champs){
         if($this->conn != null && $champs != null){
-            // construction de la requête
-            $requete = "update $table set ";
-            foreach ($champs as $key => $value){
-                $requete .= "$key=:$key,";
+            switch($table){
+                case "exemplairesdocument":
+                    $champsExemplaire = [
+                        'id' => $champs['Id'],
+                        'numero' => $champs['Numero'],
+                        'dateAchat' => $champs['DateAchat'],
+                        'photo' => $champs['Photo'],
+                        'idEtat' => $champs['IdEtat']
+                    ];
+                    $requete = "UPDATE exemplaire SET ";
+                    foreach ($champsExemplaire as $key => $value) {
+                        $requete .= "$key=:$key,";
+                    }
+                    $requete = substr($requete, 0, strlen($requete)-1);
+                    $requete .= " WHERE id=:id AND numero=:numero;";
+                    $champsExemplaire['numero'] = $id;
+                    $updateExemplaire = $this->conn->execute($requete, $champsExemplaire);   
+                    if(!$updateExemplaire){
+                        return null;
+                    }
+                default:
+                    $champs['id'] = $id;
+                    $requete = "UPDATE $table SET ";
+                    foreach ($champs as $key => $value) {
+                        $requete .= "$key=:$key,";
+                    }
+                    $requete = substr($requete, 0, strlen($requete)-1);
+                    $requete .= " WHERE id=:id;";
+                    return $this->conn->execute($requete, $champs);                 
             }
-            // (enlève la dernière virgule)
-            $requete = substr($requete, 0, strlen($requete)-1);				
-            $champs["id"] = $id;
-            $requete .= " where id=:id;";				
-            return $this->conn->execute($requete, $champs);		
-        }else{
+        }
+        else
+        {
             return null;
         }
     }
