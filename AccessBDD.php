@@ -40,6 +40,8 @@ class AccessBDD {
                     return $this->selectAllRevues();
                 case "exemplaire" :
                     return $this->selectAllExemplairesRevue();
+                case "commandedocument" :
+                    return $this->selectAllCommandesDocument();
                 default:
                     // cas d'un select portant sur une table simple, avec tri sur le libellé
                     return $this->selectAllTableSimple($table);
@@ -64,6 +66,8 @@ class AccessBDD {
                     return $this->selectAllDvd($id);
                 case "revue" :
                     return $this->selectAllRevues($id);
+                case "commandedocument" :
+                    return $this->selectAllCommandesDocument($id);
                 default:
                     // cas d'un select portant sur une table simple			
                     $param = array(
@@ -75,7 +79,6 @@ class AccessBDD {
                 return null;
         }
     }
-
    
     /**
      * récupération de toutes les lignes de d'une table simple (sans jointure) avec tri sur le libellé
@@ -146,9 +149,26 @@ class AccessBDD {
         $req .= "where e.id =:id ";
         $req .= "order by e.dateAchat DESC";		
         return $this->conn->queryAll($req, $param);
-    }		
-
+    }
     
+    /**
+     * récupération de toutes les commandes d'un document
+     * @param string $id id du document concerné
+     * @return lignes de la requete
+     */
+    public function selectAllCommandesDocument($id) {
+        $param = array (
+            "id" => $id
+                );
+        $req = "Select l.nbExemplaire, l.idLivreDvd, l.idSuivi, s.libelle, l.id, max(c.dateCommande) as dateCommande, sum(c.montant) as montant ";
+        $req .= "from commandedocument l join suivi s on s.id=l.idSuivi ";
+        $req .= "left join commande c on l.id=c.id ";
+        $req .= "where l.idLivreDvd = :id ";
+        $req .= "group by l.id ";
+        $req .= "order by dateCommande DESC";
+        return $this->conn->query($req, $param);
+    }
+
     /**
      * suppresion d'une ou plusieurs lignes dans une table
      * @param string $table nom de la table
