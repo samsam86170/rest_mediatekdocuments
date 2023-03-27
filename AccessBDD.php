@@ -74,6 +74,8 @@ class AccessBDD {
                     return $this->selectAllAbonnementsRevues($id);
                 case "exemplairesdocument":
                     return $this->selectAllExemplairesDocument($id);
+                case "utilisateur":
+                    return $this->selectUtilisateur($id);
                 default:
                     // cas d'un select portant sur une table simple			
                     $param = array(
@@ -219,7 +221,24 @@ class AccessBDD {
         $req .= "where ex.id = :id ";
         $req .= "order by ex.dateAchat DESC";       
         return $this->conn->query($req, $param);
-    }  
+    }
+    
+    /**
+     * récupération d'un utilisateur
+     * @param string $id de l'utilisateur
+     * @return lignes de la requete
+     */
+    public function selectUtilisateur($id)
+    {
+        $param = array(
+                "id" => $id
+                
+        );
+        $req = "select u.login, u.password , u.idService, s.libelle  ";
+        $req .= "from utilisateur u  join service s on s.id=u.idService ";
+        $req .= "where u.login =:id  ";     
+        return $this->conn->queryAll($req, $param);
+    }   
 
     /**
      * suppresion d'une ou plusieurs lignes dans une table
