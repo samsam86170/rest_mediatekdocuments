@@ -1,0 +1,454 @@
+{
+	"info": {
+		"_postman_id": "7def1898-f297-4fc6-9644-96199c8db662",
+		"name": "MediatekDocumentsTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22263308"
+	},
+	"item": [
+		{
+			"name": "Récupération de la liste de livres",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/livre",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"livre"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération d'un livre selon son id",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/livre/00001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"livre",
+						"00001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération de la liste des dvds",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "00027",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/dvd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"dvd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération de la liste des revues",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "00027",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/revue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"revue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des commandes d'un document ",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "00027",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/commandedocument/00001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"commandedocument",
+						"00001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des exemplaires d'une revue",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "00027",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/exemplaire/10001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"exemplaire",
+						"10001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des exemplaires d'un document",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "00027",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/exemplairesdocument/00001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"exemplairesdocument",
+						"00001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des abonnements d'une revue",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "00027",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/abonnement/10001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"abonnement",
+						"10001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Récupération des abonnements arrivants à échéance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminpwd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "00027",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"00027\",\r\n    \"ISBN\": \"111111112\",\r\n    \"auteur\": \"Zakari\",\r\n    \"collection\": \"SLAM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/rest_mediatekdocuments/abonnementsecheance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"rest_mediatekdocuments",
+						"abonnementsecheance"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
