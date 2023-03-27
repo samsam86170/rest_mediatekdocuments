@@ -60,6 +60,10 @@ class AccessBDD {
             switch($table){
                 case "exemplaire" :
                     return $this->selectAllExemplairesRevue($id);
+                case "dvd" :
+                    return $this->selectAllDvd($id);
+                case "revue" :
+                    return $this->selectAllRevues($id);
                 default:
                     // cas d'un select portant sur une table simple			
                     $param = array(
