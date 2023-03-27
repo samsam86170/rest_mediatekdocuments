@@ -3,6 +3,12 @@ header('Content-Type: application/json');
 include_once("Controle.php");
 $controle = new Controle();
 
+if(isset($_GET['error']) && $_GET['error'] == 404){
+    header('HTTP/1.0 404 Not Found');
+    echo json_encode(array('message' => 'Erreur 404: Page non trouvee'));
+    exit();
+}
+
 // Contrôle de l'authentification
 if(!isset($_SERVER['PHP_AUTH_USER']) || (isset($_SERVER['PHP_AUTH_USER']) && 
         !(($_SERVER['PHP_AUTH_USER']=='admin' && ($_SERVER['PHP_AUTH_PW']=='adminpwd'))))){
