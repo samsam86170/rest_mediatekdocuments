@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3308
--- Généré le : lun. 27 mars 2023 à 07:28
--- Version du serveur : 8.0.27
--- Version de PHP : 7.4.26
+-- Hôte : 127.0.0.1:3306
+-- Généré le : mar. 28 mars 2023 à 17:19
+-- Version du serveur : 10.6.12-MariaDB-cll-lve
+-- Version de PHP : 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,13 +27,10 @@ SET time_zone = "+00:00";
 -- Structure de la table `abonnement`
 --
 
-DROP TABLE IF EXISTS `abonnement`;
-CREATE TABLE IF NOT EXISTS `abonnement` (
-  `id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+CREATE TABLE `abonnement` (
+  `id` varchar(5) NOT NULL,
   `dateFinAbonnement` date DEFAULT NULL,
-  `idRevue` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idRevue` (`idRevue`)
+  `idRevue` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -46,12 +43,12 @@ INSERT INTO `abonnement` (`id`, `dateFinAbonnement`, `idRevue`) VALUES
 ('00020', '2023-04-28', '10001'),
 ('00021', '2023-05-19', '10001'),
 ('00200', '2023-04-02', '10001'),
+('00235', '2023-04-01', '10003'),
 ('00900', '2023-04-09', '10001');
 
 --
 -- Déclencheurs `abonnement`
 --
-DROP TRIGGER IF EXISTS `abonnement_insert_to_commande`;
 DELIMITER $$
 CREATE TRIGGER `abonnement_insert_to_commande` BEFORE INSERT ON `abonnement` FOR EACH ROW BEGIN
   DECLARE cnt INT;
@@ -65,7 +62,6 @@ CREATE TRIGGER `abonnement_insert_to_commande` BEFORE INSERT ON `abonnement` FOR
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `delete_abonnement_to_commande`;
 DELIMITER $$
 CREATE TRIGGER `delete_abonnement_to_commande` AFTER DELETE ON `abonnement` FOR EACH ROW BEGIN
    DELETE FROM commande WHERE id = OLD.id;
@@ -79,12 +75,10 @@ DELIMITER ;
 -- Structure de la table `commande`
 --
 
-DROP TABLE IF EXISTS `commande`;
-CREATE TABLE IF NOT EXISTS `commande` (
-  `id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+CREATE TABLE `commande` (
+  `id` varchar(5) NOT NULL,
   `dateCommande` date DEFAULT NULL,
-  `montant` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `montant` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -92,24 +86,19 @@ CREATE TABLE IF NOT EXISTS `commande` (
 --
 
 INSERT INTO `commande` (`id`, `dateCommande`, `montant`) VALUES
-('00001', '2023-03-17', 30),
-('00002', '2023-03-07', 30),
+('00001', '2023-02-28', 25),
+('00002', '2023-03-12', 150),
 ('00003', '2023-02-27', 30),
 ('00004', '2023-01-31', 23),
-('00005', '2023-03-22', 300),
-('00010', '2023-03-29', 34),
-('00011', '2023-03-28', 200),
-('00012', '2023-03-28', 20),
-('00015', '2023-03-28', 20),
+('00005', '2023-02-27', 20),
+('00007', '2023-03-28', 80),
+('00008', '2023-03-16', 30),
+('00009', '2023-03-24', 90),
+('00012', '2023-02-27', 30),
 ('00020', '2023-01-30', 23),
 ('00021', '2022-12-27', 23),
-('00027', '2023-03-07', 10),
-('00035', '2023-03-24', 30),
-('00054', '2023-03-07', 15),
-('00070', '2023-03-11', 40),
-('00080', '2023-03-09', 25),
 ('00200', '2023-01-30', 24),
-('00250', '2023-03-17', 10),
+('00235', '2023-03-07', 24),
 ('00900', '2022-12-26', 30);
 
 -- --------------------------------------------------------
@@ -118,15 +107,11 @@ INSERT INTO `commande` (`id`, `dateCommande`, `montant`) VALUES
 -- Structure de la table `commandedocument`
 --
 
-DROP TABLE IF EXISTS `commandedocument`;
-CREATE TABLE IF NOT EXISTS `commandedocument` (
-  `id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `nbExemplaire` int DEFAULT NULL,
-  `idLivreDvd` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `idSuivi` char(5) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idLivreDvd` (`idLivreDvd`),
-  KEY `idSuivi` (`idSuivi`)
+CREATE TABLE `commandedocument` (
+  `id` varchar(5) NOT NULL,
+  `nbExemplaire` int(11) DEFAULT NULL,
+  `idLivreDvd` varchar(10) NOT NULL,
+  `idSuivi` char(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -134,24 +119,17 @@ CREATE TABLE IF NOT EXISTS `commandedocument` (
 --
 
 INSERT INTO `commandedocument` (`id`, `nbExemplaire`, `idLivreDvd`, `idSuivi`) VALUES
-('00001', 3, '00001', '00003'),
-('00002', 2, '00002', '00002'),
-('00005', 5, '20001', '00002'),
-('00010', 2, '00001', '00003'),
-('00011', 2, '20001', '00004'),
-('00012', 1, '20001', '00004'),
-('00015', 3, '20001', '00002'),
-('00027', 2, '00001', '00003'),
-('00035', 3, '20001', '00002'),
-('00054', 2, '00001', '00003'),
-('00070', 2, '20001', '00002'),
-('00080', 2, '00001', '00003'),
-('00250', 3, '00001', '00004');
+('00001', 2, '00001', '00002'),
+('00002', 5, '00001', '00003'),
+('00005', 2, '00001', '00003'),
+('00007', 3, '20001', '00001'),
+('00008', 2, '20001', '00002'),
+('00009', 2, '20001', '00004'),
+('00012', 2, '20002', '00002');
 
 --
 -- Déclencheurs `commandedocument`
 --
-DROP TRIGGER IF EXISTS `creer_exemplaire_tuples_si_commandelivree`;
 DELIMITER $$
 CREATE TRIGGER `creer_exemplaire_tuples_si_commandelivree` AFTER UPDATE ON `commandedocument` FOR EACH ROW BEGIN
     DECLARE compteur INTEGER ;
@@ -190,7 +168,6 @@ CREATE TRIGGER `creer_exemplaire_tuples_si_commandelivree` AFTER UPDATE ON `comm
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `delete_commandedocument_to_commande`;
 DELIMITER $$
 CREATE TRIGGER `delete_commandedocument_to_commande` AFTER DELETE ON `commandedocument` FOR EACH ROW BEGIN
 DELETE FROM commande WHERE id=OLD.id ;
@@ -204,18 +181,13 @@ DELIMITER ;
 -- Structure de la table `document`
 --
 
-DROP TABLE IF EXISTS `document`;
-CREATE TABLE IF NOT EXISTS `document` (
-  `id` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `titre` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `image` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `idRayon` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `idPublic` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `idGenre` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idRayon` (`idRayon`),
-  KEY `idPublic` (`idPublic`),
-  KEY `idGenre` (`idGenre`)
+CREATE TABLE `document` (
+  `id` varchar(10) NOT NULL,
+  `titre` varchar(60) DEFAULT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `idRayon` varchar(5) NOT NULL,
+  `idPublic` varchar(5) NOT NULL,
+  `idGenre` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -273,7 +245,6 @@ INSERT INTO `document` (`id`, `titre`, `image`, `idRayon`, `idPublic`, `idGenre`
 --
 -- Déclencheurs `document`
 --
-DROP TRIGGER IF EXISTS `delete_document_to_livres_dvd`;
 DELIMITER $$
 CREATE TRIGGER `delete_document_to_livres_dvd` BEFORE DELETE ON `document` FOR EACH ROW BEGIN
   DELETE FROM livres_dvd WHERE id = OLD.id;
@@ -287,13 +258,11 @@ DELIMITER ;
 -- Structure de la table `dvd`
 --
 
-DROP TABLE IF EXISTS `dvd`;
-CREATE TABLE IF NOT EXISTS `dvd` (
-  `id` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `synopsis` text COLLATE utf8mb4_general_ci,
-  `realisateur` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `duree` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `dvd` (
+  `id` varchar(10) NOT NULL,
+  `synopsis` text DEFAULT NULL,
+  `realisateur` varchar(20) DEFAULT NULL,
+  `duree` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -310,7 +279,6 @@ INSERT INTO `dvd` (`id`, `synopsis`, `realisateur`, `duree`) VALUES
 --
 -- Déclencheurs `dvd`
 --
-DROP TRIGGER IF EXISTS `delete_dvd_to_document`;
 DELIMITER $$
 CREATE TRIGGER `delete_dvd_to_document` AFTER DELETE ON `dvd` FOR EACH ROW BEGIN
     DELETE FROM livres_dvd WHERE id=OLD.id ;
@@ -318,7 +286,6 @@ CREATE TRIGGER `delete_dvd_to_document` AFTER DELETE ON `dvd` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `insert_dvd_to_livres_dvd`;
 DELIMITER $$
 CREATE TRIGGER `insert_dvd_to_livres_dvd` BEFORE INSERT ON `dvd` FOR EACH ROW BEGIN
   IF NOT EXISTS (SELECT id FROM livres_dvd WHERE id = NEW.id) THEN
@@ -334,11 +301,9 @@ DELIMITER ;
 -- Structure de la table `etat`
 --
 
-DROP TABLE IF EXISTS `etat`;
-CREATE TABLE IF NOT EXISTS `etat` (
-  `id` char(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `libelle` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `etat` (
+  `id` char(5) NOT NULL,
+  `libelle` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -357,15 +322,12 @@ INSERT INTO `etat` (`id`, `libelle`) VALUES
 -- Structure de la table `exemplaire`
 --
 
-DROP TABLE IF EXISTS `exemplaire`;
-CREATE TABLE IF NOT EXISTS `exemplaire` (
-  `id` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `numero` int NOT NULL,
+CREATE TABLE `exemplaire` (
+  `id` varchar(10) NOT NULL,
+  `numero` int(11) NOT NULL,
   `dateAchat` date DEFAULT NULL,
-  `photo` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
-  `idEtat` char(5) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`,`numero`),
-  KEY `idEtat` (`idEtat`)
+  `photo` varchar(500) NOT NULL,
+  `idEtat` char(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -379,11 +341,21 @@ INSERT INTO `exemplaire` (`id`, `numero`, `dateAchat`, `photo`, `idEtat`) VALUES
 ('00001', 9, '2023-03-07', '', '00001'),
 ('00001', 10, '2023-03-09', '', '00001'),
 ('00001', 11, '2023-03-09', '', '00001'),
+('00001', 12, '2023-02-27', '', '00001'),
+('00001', 13, '2023-02-27', '', '00001'),
+('00001', 14, '2023-03-12', '', '00002'),
+('00001', 15, '2023-03-12', '', '00002'),
+('00001', 16, '2023-03-12', '', '00001'),
+('00001', 17, '2023-03-12', '', '00001'),
+('00001', 18, '2023-03-12', '', '00003'),
+('00001', 19, '2023-02-28', '', '00001'),
+('00001', 20, '2023-02-28', '', '00001'),
 ('00002', 1, '2023-03-07', '', '00001'),
 ('00002', 2, '2023-03-07', '', '00001'),
-('10001', 1, '2023-03-07', '', '00001'),
+('10001', 1, '2023-03-07', '', '00002'),
 ('10001', 2, '2023-03-03', '', '00001'),
 ('10002', 418, '2021-12-01', '', '00001'),
+('10003', 3, '2023-03-28', '', '00002'),
 ('10007', 3237, '2021-11-23', '', '00001'),
 ('10007', 3238, '2021-11-30', '', '00001'),
 ('10007', 3239, '2021-12-07', '', '00001'),
@@ -405,12 +377,15 @@ INSERT INTO `exemplaire` (`id`, `numero`, `dateAchat`, `photo`, `idEtat`) VALUES
 ('20001', 6, '2023-03-24', '', '00001'),
 ('20001', 9, '2023-03-28', '', '00001'),
 ('20001', 10, '2023-03-11', '', '00001'),
-('20001', 11, '2023-03-11', '', '00001');
+('20001', 11, '2023-03-11', '', '00001'),
+('20001', 12, '2023-03-16', '', '00001'),
+('20001', 13, '2023-03-16', '', '00001'),
+('20002', 1, '2023-02-27', '', '00001'),
+('20002', 2, '2023-02-27', '', '00001');
 
 --
 -- Déclencheurs `exemplaire`
 --
-DROP TRIGGER IF EXISTS `update_exemplaire_etat`;
 DELIMITER $$
 CREATE TRIGGER `update_exemplaire_etat` BEFORE UPDATE ON `exemplaire` FOR EACH ROW BEGIN
     SET FOREIGN_KEY_CHECKS=0;
@@ -424,11 +399,9 @@ DELIMITER ;
 -- Structure de la table `genre`
 --
 
-DROP TABLE IF EXISTS `genre`;
-CREATE TABLE IF NOT EXISTS `genre` (
-  `id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `libelle` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `genre` (
+  `id` varchar(5) NOT NULL,
+  `libelle` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -462,13 +435,11 @@ INSERT INTO `genre` (`id`, `libelle`) VALUES
 -- Structure de la table `livre`
 --
 
-DROP TABLE IF EXISTS `livre`;
-CREATE TABLE IF NOT EXISTS `livre` (
-  `id` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `ISBN` varchar(13) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `auteur` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `collection` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `livre` (
+  `id` varchar(10) NOT NULL,
+  `ISBN` varchar(13) DEFAULT NULL,
+  `auteur` varchar(20) DEFAULT NULL,
+  `collection` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -508,7 +479,6 @@ INSERT INTO `livre` (`id`, `ISBN`, `auteur`, `collection`) VALUES
 --
 -- Déclencheurs `livre`
 --
-DROP TRIGGER IF EXISTS `delete_livre_to_document`;
 DELIMITER $$
 CREATE TRIGGER `delete_livre_to_document` AFTER DELETE ON `livre` FOR EACH ROW BEGIN
 DELETE FROM livres_dvd WHERE id=OLD.id ;
@@ -516,7 +486,6 @@ DELETE FROM document WHERE id=OLD.id ;
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `insert_livre_to_livres_dvd`;
 DELIMITER $$
 CREATE TRIGGER `insert_livre_to_livres_dvd` BEFORE INSERT ON `livre` FOR EACH ROW BEGIN
 DECLARE cnt INT;
@@ -538,10 +507,8 @@ DELIMITER ;
 -- Structure de la table `livres_dvd`
 --
 
-DROP TABLE IF EXISTS `livres_dvd`;
-CREATE TABLE IF NOT EXISTS `livres_dvd` (
-  `id` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `livres_dvd` (
+  `id` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -586,7 +553,6 @@ INSERT INTO `livres_dvd` (`id`) VALUES
 --
 -- Déclencheurs `livres_dvd`
 --
-DROP TRIGGER IF EXISTS `insert_livres_dvd_to_document`;
 DELIMITER $$
 CREATE TRIGGER `insert_livres_dvd_to_document` BEFORE INSERT ON `livres_dvd` FOR EACH ROW BEGIN
 DECLARE cnt INT;
@@ -608,11 +574,9 @@ DELIMITER ;
 -- Structure de la table `public`
 --
 
-DROP TABLE IF EXISTS `public`;
-CREATE TABLE IF NOT EXISTS `public` (
-  `id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `libelle` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `public` (
+  `id` varchar(5) NOT NULL,
+  `libelle` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -631,11 +595,9 @@ INSERT INTO `public` (`id`, `libelle`) VALUES
 -- Structure de la table `rayon`
 --
 
-DROP TABLE IF EXISTS `rayon`;
-CREATE TABLE IF NOT EXISTS `rayon` (
-  `id` char(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `libelle` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `rayon` (
+  `id` char(5) NOT NULL,
+  `libelle` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -665,12 +627,10 @@ INSERT INTO `rayon` (`id`, `libelle`) VALUES
 -- Structure de la table `revue`
 --
 
-DROP TABLE IF EXISTS `revue`;
-CREATE TABLE IF NOT EXISTS `revue` (
-  `id` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `periodicite` varchar(2) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `delaiMiseADispo` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `revue` (
+  `id` varchar(10) NOT NULL,
+  `periodicite` varchar(2) DEFAULT NULL,
+  `delaiMiseADispo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -695,14 +655,12 @@ INSERT INTO `revue` (`id`, `periodicite`, `delaiMiseADispo`) VALUES
 --
 -- Déclencheurs `revue`
 --
-DROP TRIGGER IF EXISTS `delete_revue_to_document`;
 DELIMITER $$
 CREATE TRIGGER `delete_revue_to_document` AFTER DELETE ON `revue` FOR EACH ROW BEGIN
     DELETE FROM document WHERE id=OLD.id ;
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `insert_revue_to_document`;
 DELIMITER $$
 CREATE TRIGGER `insert_revue_to_document` BEFORE INSERT ON `revue` FOR EACH ROW BEGIN
   DECLARE cnt INT;
@@ -723,21 +681,20 @@ DELIMITER ;
 -- Structure de la table `service`
 --
 
-DROP TABLE IF EXISTS `service`;
-CREATE TABLE IF NOT EXISTS `service` (
-  `id` int NOT NULL,
-  `libelle` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
+CREATE TABLE `service` (
+  `id` char(10) NOT NULL,
+  `libelle` char(55) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `service`
 --
 
 INSERT INTO `service` (`id`, `libelle`) VALUES
-(1, 'administratif'),
-(2, 'prêts'),
-(3, 'culture'),
-(0, 'administrateur');
+('0', 'administrateur'),
+('1', 'administratif'),
+('2', 'prêts'),
+('3', 'culture');
 
 -- --------------------------------------------------------
 
@@ -745,11 +702,9 @@ INSERT INTO `service` (`id`, `libelle`) VALUES
 -- Structure de la table `suivi`
 --
 
-DROP TABLE IF EXISTS `suivi`;
-CREATE TABLE IF NOT EXISTS `suivi` (
-  `id` char(5) COLLATE utf8mb4_general_ci NOT NULL,
-  `libelle` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `suivi` (
+  `id` varchar(5) NOT NULL,
+  `libelle` varchar(55) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -768,15 +723,12 @@ INSERT INTO `suivi` (`id`, `libelle`) VALUES
 -- Structure de la table `utilisateur`
 --
 
-DROP TABLE IF EXISTS `utilisateur`;
-CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `id` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `login` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `idService` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idService` (`idService`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
+CREATE TABLE `utilisateur` (
+  `id` varchar(5) NOT NULL,
+  `login` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `idService` varchar(5) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Déchargement des données de la table `utilisateur`
@@ -789,6 +741,114 @@ INSERT INTO `utilisateur` (`id`, `login`, `password`, `idService`) VALUES
 ('00004', 'RenaultMegane', 'RenaultMegane630', '3');
 
 --
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `abonnement`
+--
+ALTER TABLE `abonnement`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idRevue` (`idRevue`);
+
+--
+-- Index pour la table `commande`
+--
+ALTER TABLE `commande`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `commandedocument`
+--
+ALTER TABLE `commandedocument`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idLivreDvd` (`idLivreDvd`),
+  ADD KEY `idSuivi` (`idSuivi`);
+
+--
+-- Index pour la table `document`
+--
+ALTER TABLE `document`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idRayon` (`idRayon`),
+  ADD KEY `idPublic` (`idPublic`),
+  ADD KEY `idGenre` (`idGenre`);
+
+--
+-- Index pour la table `dvd`
+--
+ALTER TABLE `dvd`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `etat`
+--
+ALTER TABLE `etat`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `exemplaire`
+--
+ALTER TABLE `exemplaire`
+  ADD PRIMARY KEY (`id`,`numero`),
+  ADD KEY `idEtat` (`idEtat`);
+
+--
+-- Index pour la table `genre`
+--
+ALTER TABLE `genre`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `livre`
+--
+ALTER TABLE `livre`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `livres_dvd`
+--
+ALTER TABLE `livres_dvd`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `public`
+--
+ALTER TABLE `public`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `rayon`
+--
+ALTER TABLE `rayon`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `revue`
+--
+ALTER TABLE `revue`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `service`
+--
+ALTER TABLE `service`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `suivi`
+--
+ALTER TABLE `suivi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idService` (`idService`);
+
+--
 -- Contraintes pour les tables déchargées
 --
 
@@ -798,6 +858,14 @@ INSERT INTO `utilisateur` (`id`, `login`, `password`, `idService`) VALUES
 ALTER TABLE `abonnement`
   ADD CONSTRAINT `abonnement_ibfk_1` FOREIGN KEY (`id`) REFERENCES `commande` (`id`),
   ADD CONSTRAINT `abonnement_ibfk_2` FOREIGN KEY (`idRevue`) REFERENCES `revue` (`id`);
+
+--
+-- Contraintes pour la table `commandedocument`
+--
+ALTER TABLE `commandedocument`
+  ADD CONSTRAINT `commandedocument_ibfk_1` FOREIGN KEY (`id`) REFERENCES `commande` (`id`),
+  ADD CONSTRAINT `commandedocument_ibfk_2` FOREIGN KEY (`idLivreDvd`) REFERENCES `livres_dvd` (`id`),
+  ADD CONSTRAINT `commandedocument_ibfk_3` FOREIGN KEY (`idSuivi`) REFERENCES `suivi` (`id`);
 
 --
 -- Contraintes pour la table `document`
