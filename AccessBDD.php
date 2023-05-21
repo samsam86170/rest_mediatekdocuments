@@ -12,6 +12,13 @@ class AccessBDD {
     public $serveur="127.0.0.1";
     public $port="3306";	
     public $conn = null;
+	
+   #public $login="root";
+   #public $mdp="Azerty85!";
+   #public $bd="mediatekdocuments";
+   #public $serveur="localhost";
+   #public $port="3306";	
+   #public $conn = null;
 
     /**
      * constructeur : demande de connexion à la BDD
